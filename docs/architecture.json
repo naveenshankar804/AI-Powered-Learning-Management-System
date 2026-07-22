@@ -9,6 +9,7 @@
   },
   "techStack": [
     "@eslint/js",
+    "@google/generative-ai",
     "@monaco-editor/react",
     "@radix-ui/react-accordion",
     "@radix-ui/react-dialog",
@@ -71,6 +72,7 @@
       "name": "backend",
       "description": "Assessment Engine Backend",
       "dependencies": [
+        "@google/generative-ai",
         "bullmq",
         "compression",
         "cors",
