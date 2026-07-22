@@ -12,6 +12,8 @@ import SettingsPage from './pages/SettingsPage';
 import TeacherDashboard from './pages/TeacherDashboard';
 import QuestionEditor from './pages/QuestionEditor';
 import QuestionRoadmap from './pages/QuestionRoadmap';
+import AIQuestionGenerator from './pages/AIQuestionGenerator';
+import AIMentorPage from './pages/AIMentorPage';
 
 function App() {
   return (
@@ -32,6 +34,9 @@ function App() {
            <Route path="submissions" element={<SubmissionsPage />} />
            <Route path="analytics" element={<AnalyticsPage />} />
            <Route path="settings" element={<SettingsPage />} />
+           {/* AI Features */}
+           <Route path="ai-questions" element={<AIQuestionGenerator />} />
+           <Route path="ai-mentor" element={<AIMentorPage />} />
            <Route path="*" element={<LandingPage />} />
         </Route>
       </Routes>

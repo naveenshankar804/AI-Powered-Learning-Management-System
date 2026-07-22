@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Plus, BookOpen, FileCode, CheckCircle2, Settings2, Trash2, Edit3, Wrench, BarChart3 } from 'lucide-react';
+import { Plus, BookOpen, FileCode, CheckCircle2, Settings2, Trash2, Edit3, Wrench, BarChart3, Sparkles } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import TrainerPanel from './TrainerPanel';
@@ -98,12 +98,20 @@ export default function TeacherDashboard() {
           <h1 className="text-3xl font-black text-gray-900 tracking-tight">Teacher Portal</h1>
           <p className="text-gray-500 mt-1 font-medium">Manage your curriculum and student assessments</p>
         </div>
-        <button 
-          onClick={() => navigate('/teacher/editor')}
-          className="flex items-center gap-2 bg-emerald-600 hover:bg-emerald-700 text-white px-5 py-2.5 rounded-xl font-bold shadow-sm transition-all hover:-translate-y-0.5"
-        >
-          <Plus size={20} /> Create Question
-        </button>
+        <div style={{ display: 'flex', gap: '10px', alignItems: 'center' }}>
+          <button 
+            onClick={() => navigate('/ai-questions')}
+            style={{ display: 'flex', alignItems: 'center', gap: 8, padding: '10px 18px', borderRadius: 12, border: 'none', cursor: 'pointer', background: 'linear-gradient(135deg,#6c63ff,#a855f7)', color: 'white', fontWeight: 700, fontSize: 14, boxShadow: '0 4px 16px rgba(108,99,255,0.35)', transition: 'all 0.2s' }}
+          >
+            <Sparkles size={18} /> AI Generate
+          </button>
+          <button 
+            onClick={() => navigate('/teacher/editor')}
+            className="flex items-center gap-2 bg-emerald-600 hover:bg-emerald-700 text-white px-5 py-2.5 rounded-xl font-bold shadow-sm transition-all hover:-translate-y-0.5"
+          >
+            <Plus size={20} /> Create Question
+          </button>
+        </div>
       </header>
 
       <div className="flex flex-wrap gap-2 bg-white p-2 rounded-2xl border border-gray-100 shadow-sm w-fit">

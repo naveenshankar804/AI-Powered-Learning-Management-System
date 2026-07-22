@@ -6,9 +6,11 @@ import {
   ArrowRight,
   BarChart3,
   BookOpen,
+  Brain,
   CheckCircle2,
   ChevronRight,
   Clock3,
+  Cpu,
   FileVideo,
   Flame,
   Gauge,
@@ -565,6 +567,57 @@ export default function Dashboard() {
               : 'Open analytics to inspect score distribution, failed tests, and visual drift patterns.'
           }
         />
+      </section>
+
+      {/* AI Feature Cards */}
+      <section className="grid gap-6 lg:grid-cols-2">
+        <Link
+          to="/ai-mentor"
+          className="group relative overflow-hidden rounded-[2rem] border border-purple-200/50 p-6 shadow-[0_12px_36px_rgba(108,99,255,0.1)] transition-all hover:-translate-y-1 hover:shadow-[0_20px_50px_rgba(108,99,255,0.2)]"
+          style={{ background: 'linear-gradient(135deg, rgba(108,99,255,0.06) 0%, rgba(168,85,247,0.04) 100%)', borderColor: 'rgba(108,99,255,0.25)' }}
+        >
+          <div className="absolute right-[-10%] top-[-20%] h-48 w-48 rounded-full opacity-20" style={{ background: 'radial-gradient(circle, #6c63ff, transparent)' }} />
+          <div className="relative z-10">
+            <div className="flex items-start justify-between gap-4">
+              <div className="flex h-14 w-14 items-center justify-center rounded-2xl" style={{ background: 'linear-gradient(135deg, #6c63ff, #a855f7)' }}>
+                <Brain size={26} color="white" />
+              </div>
+              <div className="flex items-center gap-2 rounded-full px-3 py-1 text-[11px] font-black uppercase tracking-[0.2em]" style={{ background: 'rgba(108,99,255,0.12)', color: '#6c63ff' }}>
+                <Sparkles size={12} /> AI Powered
+              </div>
+            </div>
+            <p className="mt-5 text-[11px] font-black uppercase tracking-[0.18em] text-purple-500">Student AI Mentor</p>
+            <h3 className="mt-2 text-xl font-black tracking-tight" style={{ color: '#1e1a2e' }}>Your Personal AI Study Coach</h3>
+            <p className="mt-3 text-sm leading-6 text-gray-600">Analyze your performance, get a daily study plan, AI-powered chat help, and personalized question recommendations based on your weak areas.</p>
+            <div className="mt-5 inline-flex items-center gap-2 text-sm font-bold" style={{ color: '#6c63ff' }}>
+              Open AI Mentor <ChevronRight size={16} />
+            </div>
+          </div>
+        </Link>
+
+        <Link
+          to="/ai-questions"
+          className="group relative overflow-hidden rounded-[2rem] border p-6 shadow-[0_12px_36px_rgba(168,85,247,0.08)] transition-all hover:-translate-y-1 hover:shadow-[0_20px_50px_rgba(168,85,247,0.18)]"
+          style={{ background: 'linear-gradient(135deg, rgba(168,85,247,0.05) 0%, rgba(59,130,246,0.04) 100%)', borderColor: 'rgba(168,85,247,0.2)' }}
+        >
+          <div className="absolute right-[-10%] top-[-20%] h-48 w-48 rounded-full opacity-20" style={{ background: 'radial-gradient(circle, #a855f7, transparent)' }} />
+          <div className="relative z-10">
+            <div className="flex items-start justify-between gap-4">
+              <div className="flex h-14 w-14 items-center justify-center rounded-2xl" style={{ background: 'linear-gradient(135deg, #a855f7, #3b82f6)' }}>
+                <Sparkles size={26} color="white" />
+              </div>
+              <div className="flex items-center gap-2 rounded-full px-3 py-1 text-[11px] font-black uppercase tracking-[0.2em]" style={{ background: 'rgba(168,85,247,0.12)', color: '#a855f7' }}>
+                <Cpu size={12} /> Gemini AI
+              </div>
+            </div>
+            <p className="mt-5 text-[11px] font-black uppercase tracking-[0.18em] text-purple-400">AI Question Generator</p>
+            <h3 className="mt-2 text-xl font-black tracking-tight" style={{ color: '#1e1a2e' }}>Generate Programming Challenges</h3>
+            <p className="mt-3 text-sm leading-6 text-gray-600">Select a topic and difficulty, and let Google Gemini AI generate fresh programming questions. One click to save them to the question bank.</p>
+            <div className="mt-5 inline-flex items-center gap-2 text-sm font-bold" style={{ color: '#a855f7' }}>
+              Generate Questions <ChevronRight size={16} />
+            </div>
+          </div>
+        </Link>
       </section>
 
       <section className="grid gap-6 xl:grid-cols-[1.15fr_0.85fr]">

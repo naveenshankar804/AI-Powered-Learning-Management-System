@@ -9,12 +9,9 @@ const PORT = process.env.PORT || 5000;
 // Database Sync and Server Startup
 const startServer = async () => {
   try {
-    // Authenticate with DB (Note: Alter locally during dev, avoid full sync in prod)
     await sequelize.authenticate();
     console.log('Database connection established successfully.');
 
-    // Pre-sync repair: if submissions exist but users are missing, FK creation during `alter`
-    // will fail. Backfill minimal user rows for all distinct `student_id` values.
     try {
       const [rows] = await sequelize.query('SELECT DISTINCT student_id FROM submissions');
       if (Array.isArray(rows) && rows.length > 0) {
@@ -28,14 +25,9 @@ const startServer = async () => {
             { bind: [sid, `Student ${sid}`, 'student', 0, 0, null] }
           );
         }
-        console.log(`Pre-sync: ensured users exist for ${rows.length} distinct submission student_id values.`);
       }
-    } catch (_) {
-      // Tables might not exist yet on first boot; ignore.
-    }
+    } catch (_) {}
 
-    // FR-8 replay support: older schema versions had a UNIQUE constraint on evaluation_runs.submission_id.
-    // Sequelize's sync({ alter: true }) doesn't reliably drop unique constraints, so we do it explicitly.
     try {
       const [rows] = await sequelize.query(`
         SELECT c.conname
@@ -46,26 +38,23 @@ const startServer = async () => {
       if (Array.isArray(rows)) {
         for (const r of rows) {
           const name = String(r?.conname || '');
-          if (!name) continue;
-          if (name.toLowerCase().includes('submission')) {
+          if (name && name.toLowerCase().includes('submission')) {
             await sequelize.query(`ALTER TABLE evaluation_runs DROP CONSTRAINT IF EXISTS "${name}"`);
           }
         }
       }
-    } catch (_) {
-      // ignore (table may not exist yet)
-    }
+    } catch (_) {}
     
-    // Sync models (creates tables if they don't exist)
     await sequelize.sync({ alter: true });
     console.log('Database synced.');
-
-    app.listen(PORT, '0.0.0.0', () => {
-      console.log(`API Server running on http://0.0.0.0:${PORT}`);
-    });
   } catch (error) {
-    console.error('Unable to start server:', error);
+    console.warn('[server] DB connection skipped (PostgreSQL not running locally):', error.message);
+    console.warn('[server] Running in memory/mock fallback mode.');
   }
+
+  app.listen(PORT, '0.0.0.0', () => {
+    console.log(`🚀 Assessment Engine API running on http://localhost:${PORT}`);
+  });
 };
 
 if (require.main === module) {

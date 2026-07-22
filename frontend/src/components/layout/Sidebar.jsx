@@ -1,11 +1,13 @@
 import { NavLink } from 'react-router-dom';
-import { Home, GraduationCap, BarChart3, Settings, FileVideo, TerminalSquare, SlidersHorizontal, BookOpen } from 'lucide-react';
+import { Home, GraduationCap, BarChart3, Settings, FileVideo, TerminalSquare, SlidersHorizontal, BookOpen, Sparkles, Brain } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 
 export default function Sidebar({ isOpen, setIsOpen }) {
   const routes = [
     { name: 'Dashboard', path: '/', icon: <Home size={20} /> },
     { name: 'Learning Roadmap', path: '/roadmap', icon: <BookOpen size={20} /> },
+    { name: 'AI Mentor', path: '/ai-mentor', icon: <Brain size={20} />, highlight: true },
+    { name: 'AI Questions', path: '/ai-questions', icon: <Sparkles size={20} />, highlight: true },
     { name: 'Teacher Portal', path: '/teacher', icon: <GraduationCap size={20} /> },
     { name: 'Practice Workspace', path: '/student', icon: <TerminalSquare size={20} /> },
     { name: 'My Submissions', path: '/submissions', icon: <FileVideo size={20} /> },
@@ -53,14 +55,21 @@ export default function Sidebar({ isOpen, setIsOpen }) {
                 className={({ isActive }) => 
                   `flex items-center gap-3 px-3 py-2.5 rounded-lg transition-all duration-200 group relative ${
                     isActive 
-                      ? 'bg-emerald-50 text-emerald-700 font-semibold' 
-                      : 'text-gray-600 hover:bg-gray-100/80 hover:text-gray-900 font-medium'
+                      ? 'bg-purple-50 text-purple-700 font-semibold' 
+                      : route.highlight
+                        ? 'text-purple-600 hover:bg-purple-50 hover:text-purple-700 font-medium'
+                        : 'text-gray-600 hover:bg-gray-100/80 hover:text-gray-900 font-medium'
                   } ${!isOpen && 'justify-center'}`
                 }
                 title={!isOpen ? route.name : undefined}
               >
                 <div className="flex items-center">{route.icon}</div>
-                {isOpen && <span className="text-sm whitespace-nowrap">{route.name}</span>}
+                {isOpen && (
+                  <span className="text-sm whitespace-nowrap flex items-center gap-1.5">
+                    {route.name}
+                    {route.highlight && <span style={{ fontSize: 9, background: 'linear-gradient(135deg,#6c63ff,#a855f7)', color: 'white', padding: '1px 5px', borderRadius: 99, fontWeight: 700 }}>AI</span>}
+                  </span>
+                )}
               </NavLink>
             ))}
          </div>

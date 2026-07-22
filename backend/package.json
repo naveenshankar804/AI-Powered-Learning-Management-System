@@ -21,6 +21,7 @@
     "supertest": "^7.2.2"
   },
   "dependencies": {
+    "@google/generative-ai": "^0.24.1",
     "bullmq": "^5.71.0",
     "compression": "^1.8.1",
     "cors": "^2.8.6",
