@@ -14,9 +14,9 @@ Autonomous self-documenting repository.
 
 This is a monorepo containing the following workspaces:
 
-- **`backend/`**: Workspace directory
+- **`backend/`**: Assessment Engine Backend
 - **`frontend/`**: Workspace directory
-- **`worker/`**: Workspace directory
+- **`worker/`**: Assessment Engine Evaluation Worker
 
 ## Technology Stack
 
@@ -37,27 +37,27 @@ This is a monorepo containing the following workspaces:
   "@types/react-dom",
   "@vitejs/plugin-react",
   "@vitest/coverage-v8",
+  "bullmq",
   "eslint-plugin-react-hooks",
   "eslint-plugin-react-refresh",
+  "express",
   "express-rate-limit",
+  "ioredis",
   "jest",
   "lucide-react",
   "nodemon",
+  "pg",
+  "pg-hstore",
+  "puppeteer",
   "react",
   "react-chartjs-2",
   "react-dom",
   "react-router-dom",
+  "sequelize",
   "tailwind-merge",
   "tailwindcss",
   "vite",
-  "vitest",
-  "bullmq",
-  "express",
-  "ioredis",
-  "pg",
-  "pg-hstore",
-  "puppeteer",
-  "sequelize"
+  "vitest"
 ]
 ```
 
@@ -74,11 +74,8 @@ The `assessment-engine` repository consists of 3 services:
 
 ## Recent Code Changes
 
-- docs: auto-generate repository documentation and diagrams [skip ci] (552ca23)
-- docs: auto-generate repository documentation and diagrams [skip ci] (02d525a)
-- docs: auto-generate repository documentation and diagrams [skip ci] (50cb559)
-- docs: auto-generate repository documentation and diagrams [skip ci] (dfed17f)
-- docs: auto-generate repository documentation and diagrams [skip ci] (be31995)
+- chore: exclude .npm-cache and build artifacts from git tracking (43b3d70)
+- feat: Initial commit - AI-Powered Learning Management System (87990be)
 
 ## Infrastructure
 
