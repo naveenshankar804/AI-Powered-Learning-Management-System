@@ -74,6 +74,8 @@ The `assessment-engine` repository consists of 3 services:
 
 ## Recent Code Changes
 
+- fix: add Vercel serverless config and graceful API entry point (01d10f8)
+- docs: auto-generate repository documentation and diagrams [skip ci] (709b5bd)
 - chore: exclude .npm-cache and build artifacts from git tracking (43b3d70)
 - feat: Initial commit - AI-Powered Learning Management System (87990be)
 
