@@ -10,3 +10,5 @@ cypress/screenshots/
 artifacts/
 .gemini/
 .agents/
+.npm-cache/
+*.tar.gz
