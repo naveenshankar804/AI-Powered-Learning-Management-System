@@ -1,0 +1,166 @@
+{
+  "repository": {
+    "name": "assessment-engine",
+    "workspaces": [
+      "backend",
+      "frontend",
+      "worker"
+    ]
+  },
+  "techStack": [
+    "@eslint/js",
+    "@monaco-editor/react",
+    "@radix-ui/react-accordion",
+    "@radix-ui/react-dialog",
+    "@radix-ui/react-dropdown-menu",
+    "@radix-ui/react-slot",
+    "@radix-ui/react-tabs",
+    "@radix-ui/react-toast",
+    "@radix-ui/react-tooltip",
+    "@tailwindcss/vite",
+    "@testing-library/jest-dom",
+    "@testing-library/react",
+    "@testing-library/user-event",
+    "@types/react",
+    "@types/react-dom",
+    "@vitejs/plugin-react",
+    "@vitest/coverage-v8",
+    "autoprefixer",
+    "axios",
+    "chart.js",
+    "class-variance-authority",
+    "clsx",
+    "compression",
+    "cross-env",
+    "dompurify",
+    "eslint",
+    "eslint-plugin-react-hooks",
+    "eslint-plugin-react-refresh",
+    "express-rate-limit",
+    "framer-motion",
+    "globals",
+    "helmet",
+    "jest",
+    "jsdom",
+    "lucide-react",
+    "nodemon",
+    "postcss",
+    "react",
+    "react-chartjs-2",
+    "react-dom",
+    "react-router-dom",
+    "supertest",
+    "tailwind-merge",
+    "tailwindcss",
+    "vite",
+    "vitest"
+  ],
+  "services": [
+    {
+      "name": "backend",
+      "description": "",
+      "dependencies": [
+        "compression",
+        "express-rate-limit",
+        "helmet"
+      ],
+      "devDependencies": [
+        "cross-env",
+        "jest",
+        "nodemon",
+        "supertest"
+      ],
+      "scripts": {
+        "test": "cross-env NODE_ENV=test jest",
+        "start": "nodemon server.js",
+        "seed": "node scripts/seed.js",
+        "demo": "node scripts/demo.js"
+      },
+      "infraDependencies": [
+        "postgres",
+        "redis"
+      ]
+    },
+    {
+      "name": "frontend",
+      "description": "",
+      "dependencies": [
+        "@monaco-editor/react",
+        "@radix-ui/react-accordion",
+        "@radix-ui/react-dialog",
+        "@radix-ui/react-dropdown-menu",
+        "@radix-ui/react-slot",
+        "@radix-ui/react-tabs",
+        "@radix-ui/react-toast",
+        "@radix-ui/react-tooltip",
+        "axios",
+        "chart.js",
+        "class-variance-authority",
+        "clsx",
+        "dompurify",
+        "framer-motion",
+        "lucide-react",
+        "react",
+        "react-chartjs-2",
+        "react-dom",
+        "react-router-dom",
+        "tailwind-merge"
+      ],
+      "devDependencies": [
+        "@eslint/js",
+        "@tailwindcss/vite",
+        "@testing-library/jest-dom",
+        "@testing-library/react",
+        "@testing-library/user-event",
+        "@types/react",
+        "@types/react-dom",
+        "@vitejs/plugin-react",
+        "@vitest/coverage-v8",
+        "autoprefixer",
+        "eslint",
+        "eslint-plugin-react-hooks",
+        "eslint-plugin-react-refresh",
+        "globals",
+        "jsdom",
+        "postcss",
+        "tailwindcss",
+        "vite",
+        "vitest"
+      ],
+      "scripts": {
+        "dev": "vite",
+        "build": "vite build",
+        "lint": "eslint .",
+        "test": "vitest run",
+        "preview": "vite preview"
+      },
+      "infraDependencies": []
+    },
+    {
+      "name": "worker",
+      "description": "",
+      "dependencies": [],
+      "devDependencies": [
+        "jest"
+      ],
+      "scripts": {
+        "test": "jest",
+        "start": "node index.js"
+      },
+      "infraDependencies": [
+        "postgres",
+        "redis"
+      ]
+    }
+  ],
+  "infrastructure": [
+    {
+      "name": "postgres",
+      "type": "PostgreSQL"
+    },
+    {
+      "name": "redis",
+      "type": "Redis"
+    }
+  ]
+}

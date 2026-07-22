@@ -1,0 +1,104 @@
+name: Comprehensive QA Automation
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened]
+  push:
+    branches: [ '**' ]
+  release:
+    types: [ published ]
+  schedule:
+    - cron: '0 0 * * 0' # Run weekly on Sunday
+
+jobs:
+  quality-and-security:
+    name: Code Quality & Security Scans
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pull-requests: write
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: 'npm'
+
+      - name: Install Dependencies
+        run: npm ci
+
+      - name: Create Reports Directory
+        run: mkdir -p reports
+
+      - name: Check Code Formatting
+        continue-on-error: true
+        run: npx prettier --check . > reports/prettier-report.txt || true
+
+      - name: Linting (ESLint)
+        continue-on-error: true
+        run: npx eslint . --format json --output-file reports/eslint-report.json || true
+
+      - name: Type Checking
+        continue-on-error: true
+        run: npx tsc --noEmit > reports/tsc-report.txt || true
+
+      - name: Dead & Duplicate Code Analysis (Knip & JSCPD)
+        continue-on-error: true
+        run: |
+          npx knip --reporter json > reports/knip-report.json || true
+          npx jscpd . --reporters json --output reports/ || true
+          mv reports/jscpd-report.json reports/jscpd-report.json 2>/dev/null || true
+
+      - name: Secret Scanning
+        continue-on-error: true
+        run: npx secretlint "**/*" --format json > reports/secretlint-report.json || true
+
+      - name: License Compliance
+        continue-on-error: true
+        run: npx license-checker --json > reports/license-report.json || true
+
+      - name: Dependency Vulnerability Audit
+        continue-on-error: true
+        run: npm audit --json > reports/npm-audit-report.json || true
+
+      - name: Generate SBOM
+        continue-on-error: true
+        run: npx @cyclonedx/cyclonedx-npm --output-format JSON --output-file reports/sbom.json || true
+
+      - name: AI QA Agent Analysis
+        env:
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+          GITHUB_STEP_SUMMARY: $GITHUB_STEP_SUMMARY
+        run: node scripts/ai-qa-agent.js
+
+      - name: Commit QA Dashboard (if not PR)
+        if: github.event_name != 'pull_request'
+        run: |
+          git config --global user.name 'github-actions[bot]'
+          git config --global user.email 'github-actions[bot]@users.noreply.github.com'
+          git add docs/QA_DASHBOARD.md
+          git diff --quiet && git diff --staged --quiet || (git commit -m "docs: update QA dashboard [skip ci]" && git push)
+
+      - name: Comment PR with QA Dashboard
+        if: github.event_name == 'pull_request'
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const fs = require('fs');
+            const path = require('path');
+            const dashboardPath = path.join(process.env.GITHUB_WORKSPACE, 'docs', 'QA_DASHBOARD.md');
+            if (fs.existsSync(dashboardPath)) {
+              const body = fs.readFileSync(dashboardPath, 'utf8');
+              github.rest.issues.createComment({
+                issue_number: context.issue.number,
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                body: "🤖 **AI QA Review Complete**\n\n<details><summary>View Full QA Dashboard</summary>\n\n" + body + "\n</details>"
+              });
+            }

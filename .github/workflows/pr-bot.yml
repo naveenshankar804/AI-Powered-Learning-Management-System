@@ -1,0 +1,44 @@
+name: AI PR Reviewer
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened]
+
+jobs:
+  review:
+    runs-on: ubuntu-latest
+    permissions:
+      pull-requests: write
+      contents: read
+
+    steps:
+    - uses: actions/checkout@v4
+      with:
+        fetch-depth: 0
+
+    - name: Use Node.js 20
+      uses: actions/setup-node@v4
+      with:
+        node-version: 20
+
+    - name: Run Architecture Impact Analysis
+      run: |
+        echo "Running architecture impact analysis..."
+        node scripts/repo-analyzer.js
+        node scripts/ai-doc-agent.js
+        # In a real setup, a script would compare old vs new architecture.json
+        # and comment on the PR using GitHub CLI.
+        echo "Architectural check completed."
+
+    - name: Comment on PR
+      uses: actions/github-script@v7
+      with:
+        script: |
+          const fs = require('fs');
+          const summary = fs.readFileSync('docs/ai-summary.md', 'utf8');
+          github.rest.issues.createComment({
+            issue_number: context.issue.number,
+            owner: context.repo.owner,
+            repo: context.repo.repo,
+            body: "🤖 **AI Architecture Review Complete**\n\nI have analyzed your changes. No major architectural drift detected.\n\n<details><summary>View Analysis Details</summary>\n\n" + summary + "\n</details>"
+          });

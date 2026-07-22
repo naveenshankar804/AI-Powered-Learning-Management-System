@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64" role="img" aria-label="Amypo">
+  <title>Amypo</title>
+  <!-- Minimal monogram: outlined "A" that stays readable at favicon sizes. -->
+  <path
+    d="M32 8 L10 56 H22.2 L26.6 45.2 H37.4 L41.8 56 H54 L32 8 Z
+       M32 23.5 L35.7 33.2 H28.3 L32 23.5 Z"
+    fill="#24a86c"
+    stroke="#000000"
+    stroke-width="4.5"
+    stroke-linejoin="round"
+  />
+</svg>
+

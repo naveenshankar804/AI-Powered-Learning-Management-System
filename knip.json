@@ -1,0 +1,25 @@
+{
+  "$schema": "https://unpkg.com/knip@6/schema-json",
+  "workspaces": {
+    "backend": {
+      "entry": ["server.js", "index.js", "scripts/**/*.js"],
+      "project": ["**/*.js"]
+    },
+    "frontend": {
+      "entry": ["src/main.jsx", "index.html"],
+      "project": ["src/**/*.{js,jsx}"]
+    },
+    "worker": {
+      "entry": ["index.js"],
+      "project": ["**/*.js"]
+    }
+  },
+  "ignore": [
+    "docs/**",
+    "coverage/**"
+  ],
+  "ignoreDependencies": [
+    "eslint-*",
+    "stylelint-*"
+  ]
+}

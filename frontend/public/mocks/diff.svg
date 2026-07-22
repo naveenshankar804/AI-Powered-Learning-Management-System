@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 400" width="800" height="400">
+  <defs>
+    <filter id="shadow" x="-10%" y="-10%" width="120%" height="120%">
+      <feDropShadow dx="0" dy="4" stdDeviation="6" flood-opacity="0.05" />
+    </filter>
+  </defs>
+  
+  <!-- Heatmap Background (Expected faded out to represent matching pixels) -->
+  <rect width="800" height="400" fill="#f8fafc" />
+  <rect x="200" y="50" width="400" height="300" rx="16" fill="#ffffff" filter="url(#shadow)" stroke="#e2e8f0" stroke-width="1" />
+  <text x="240" y="110" font-family="system-ui, -apple-system, sans-serif" font-size="24" font-weight="700" fill="#e2e8f0">Pro Plan</text>
+  <text x="240" y="150" font-family="system-ui, -apple-system, sans-serif" font-size="32" font-weight="800" fill="#d8b4fe">$29</text>
+  <text x="240" y="200" font-family="system-ui, -apple-system, sans-serif" font-size="14" font-weight="500" fill="#cbd5e1">✓ Unlimited Projects</text>
+  
+  <!-- Heatmap Error Layer: Bright Red overlays representing mismatching pixels -->
+  
+  <!-- Mismatch from "Missing flex side-by-side element" (where "24/7 support" SHOULD be) -->
+  <rect x="395" y="185" width="130" height="20" fill="rgba(239, 68, 68, 0.4)" />
+  <text x="400" y="200" font-family="system-ui, -apple-system, sans-serif" font-size="14" font-weight="500" fill="rgba(239, 68, 68, 0.9)">✓ 24/7 Support</text>
+
+  <!-- Mismatch from "Stacked wrong element" (where "24/7 support" IS) -->
+  <rect x="235" y="210" width="130" height="20" fill="rgba(239, 68, 68, 0.7)" />
+  <text x="240" y="225" font-family="system-ui, -apple-system, sans-serif" font-size="14" font-weight="500" fill="red">✓ 24/7 Support</text>
+
+  <!-- Mismatch Expected Button -->
+  <rect x="240" y="240" width="320" height="48" rx="8" fill="rgba(239, 68, 68, 0.3)" />
+
+  <!-- Mismatch Actual Button (Offset and wrong color) -->
+  <rect x="240" y="265" width="320" height="48" rx="8" fill="rgba(239, 68, 68, 0.8)" />
+</svg>

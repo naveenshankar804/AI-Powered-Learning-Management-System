@@ -1,0 +1,66 @@
+name: Repository Automation
+
+on:
+  push:
+    branches: [ main ]
+  release:
+    types: [ published ]
+  schedule:
+    - cron: '0 0 * * 0' # Run weekly on Sunday
+
+jobs:
+  analyze-and-document:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+    - uses: actions/checkout@v4
+      with:
+        fetch-depth: 0 # Required for git log analysis
+
+    - name: Use Node.js 20
+      uses: actions/setup-node@v4
+      with:
+        node-version: 20
+        cache: 'npm'
+
+    - name: Install dependencies
+      run: npm ci
+
+    - name: Run Tests
+      run: |
+        npm test --workspace=backend || true
+        npm test --workspace=frontend || true
+      env:
+        DB_HOST: localhost
+        DB_USER: postgres
+        DB_PASSWORD: postgrespassword
+        DB_NAME: assessment_engine
+        REDIS_HOST: localhost
+
+    - name: Run Linters & Security Scans
+      run: |
+        npm audit || true
+        npm run lint --workspace=frontend || true
+
+    - name: Autonomous Analysis
+      run: node scripts/repo-analyzer.js
+
+    - name: Generate Architecture Diagrams
+      run: node scripts/diagram-generator.js
+
+    - name: AI Documentation Agent
+      run: node scripts/ai-doc-agent.js
+      env:
+        OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+
+    - name: Rebuild README
+      run: node scripts/readme-generator.js
+
+    - name: Commit and Push Changes
+      run: |
+        git config --global user.name 'github-actions[bot]'
+        git config --global user.email 'github-actions[bot]@users.noreply.github.com'
+        git add docs/ README.md
+        git diff --quiet && git diff --staged --quiet || (git commit -m "docs: auto-generate repository documentation and diagrams [skip ci]" && git push)

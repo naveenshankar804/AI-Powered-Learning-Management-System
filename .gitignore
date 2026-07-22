@@ -1,0 +1,12 @@
+node_modules/
+.env
+dist/
+build/
+.DS_Store
+*.log
+coverage/
+cypress/videos/
+cypress/screenshots/
+artifacts/
+.gemini/
+.agents/
